@@ -35,8 +35,11 @@
       <a class="nav-link" href="#" id="nav-all">Hack or Snooze</a>
     </div>
     <div class="nav-hidden-links" style="display:none">
+       | 
       <a class="nav-link" href="#" id="nav-submit-stories">Submit</a>
+       | 
       <a class="nav-link" href="#" id="nav-favorites">Favorites</a>
+       | 
       <a class="nav-link" href="#" id="nav-my-stories">My Stories</a>
     </div>
     <div class="nav-right">
@@ -47,23 +50,22 @@
   </nav>
 
   <!-- Story Submission Form (create- not really needed in names / pick a better one)-->
-  <section>
+  <section class="stories-submission-container container">
     <form action="#" id="story-submission-form" class="account-form hidden" method="post">
-      <h4>Submit Story<h4>
-          <div class="story-submit-input">
-            <label for="create-author">Author</label>
-            <input id="create-author" value="Vanessa">
-          </div>
-          <div class="story-submit-input">
-            <label for="create-title">Title</label>
-            <input id="create-title" value="Hotel Offers Discounted Room">
-          </div>
-          <div class="story-submit-input">
-            <label for="create-url">URL</label>
-            <input id="create-url"
-              value="https://sfist.com/2021/09/01/union-squares-handlery-hotel-offers-discounted-room-rate-for-caldor-fire-evacuees/">
-          </div>
-          <button type="submit">Submit</button>
+        <div class="story-submit-input">
+          <label for="create-author">Author</label>
+          <input id="create-author" value="Vanessa">
+        </div>
+        <div class="story-submit-input">
+          <label for="create-title">Title</label>
+          <input id="create-title" value="Hotel Offers Discounted Room">
+        </div>
+        <div class="story-submit-input">
+          <label for="create-url">URL</label>
+          <input id="create-url"
+            value="https://sfist.com/2021/09/01/union-squares-handlery-hotel-offers-discounted-room-rate-for-caldor-fire-evacuees/">
+        </div>
+        <button type="submit">Submit</button>
     </form>
     <hr>
   </section>
@@ -71,6 +73,7 @@
 
   <!-- area for stories (all stories, user stories, favorites) -->
   <section class="stories-container container">
+    <!-- STORY SUBMIT FORM CAN GO HERE -->
 
     <!-- loading message (removed by JS after stories loaded) -->
     <div id="stories-loading-msg">Loading&hellip;</div>

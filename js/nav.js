@@ -33,6 +33,7 @@ function updateNavOnLogin() {
   $navLogin.hide();
   $navLogOut.show();
   $navUserProfile.text(`${currentUser.username}`).show();
+  $navHiddenLinks.show();
   $(".account-forms-container").hide();
 }
 
