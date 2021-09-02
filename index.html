@@ -37,6 +37,12 @@
   <div class="navbar-brand">
     <a class="nav-link" href="#" id="nav-all">Hack or Snooze</a>
   </div>
+  <!-- style="display: none" -->
+  <div class ="nav-hidden-links">
+    <a class="nav-link" href="#" id="nav-submit-stories">Submit</a>
+    <a class="nav-link" href="#" id="nav-favorites">Favorites</a>
+    <a class="nav-link" href="#" id="nav-my-stories">My Stories</a>
+  </div>
   <div class="nav-right">
     <a class="nav-link" href="#" id="nav-login">login/signup</a>
     <a class="nav-link" href="#" id="nav-user-profile"></a>
@@ -93,6 +99,30 @@
       <input id="signup-password" autocomplete="new-password" type="password">
     </div>
     <button type="submit">create account</button>
+  </form>
+</section>
+
+<!-- Story Submission Form--> 
+<section>
+  <form
+    action="#"
+    id="story-submission-form"
+    class="account-form hidden"
+    method="post">
+    <h4>Submit Story<h4>
+    <div class="story-submit-input">
+      <label for="create-author">Author</label>
+      <input id="create-author" value="Vanessa">
+    </div>
+    <div class="story-submit-input">
+      <label for="create-title">Title</label>
+      <input id="create-title" value="Hotel Offers Discounted Room">
+    </div>
+    <div class="story-submit-input">
+      <label for="create-url">URL</label>
+      <input id="create-url" value="https://sfist.com/2021/09/01/union-squares-handlery-hotel-offers-discounted-room-rate-for-caldor-fire-evacuees/">
+    </div>
+    <button type="submit">Submit</button>
   </form>
 </section>
 

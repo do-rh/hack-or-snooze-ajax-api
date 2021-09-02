@@ -50,3 +50,20 @@ function putStoriesOnPage() {
 
   $allStoriesList.show();
 }
+
+function getStorySubmitForm () {
+  const $author = $("#create-author").val();
+  const $title = $("#create-title").val();
+  const $url = $("#create-url").val();
+
+  const newStory = {
+    author: $author,
+    title: $title,
+    url: $url,
+  };
+
+  console.log("this.user:", window.localStorage);
+  const response = await storyList.addStory(window.localStorage, newStory);
+  putStoriesOnPage();
+  // return response; 
+}
