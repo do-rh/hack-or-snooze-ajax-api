@@ -20,8 +20,7 @@ async function getAndShowStoriesOnStart() {
  */
 
 function generateStoryMarkup(story) {
-  // console.debug("generateStoryMarkup", story);
-
+  console.log("generateStoryMarkup", story);
   const hostName = story.getHostName();
   return $(`
       <li id="${story.storyId}">
@@ -39,7 +38,7 @@ function generateStoryMarkup(story) {
 
 function putStoriesOnPage() {
   console.debug("putStoriesOnPage");
-
+  console.log("putstoriesonPage is running")
   $allStoriesList.empty();
 
   // loop through all of our stories and generate HTML for them
@@ -51,19 +50,28 @@ function putStoriesOnPage() {
   $allStoriesList.show();
 }
 
-function getStorySubmitForm () {
+/** Get the data from the submit story form, call add story on
+ * new story submission and then update DOM with new submission.
+ */
+async function getStorySubmitForm(evt) {
+  evt.preventDefault();
   const $author = $("#create-author").val();
   const $title = $("#create-title").val();
   const $url = $("#create-url").val();
 
-  const newStory = {
+  const formValues = {
     author: $author,
     title: $title,
     url: $url,
   };
-
-  console.log("this.user:", window.localStorage);
-  const response = await storyList.addStory(window.localStorage, newStory);
+  
+  const response = await StoryList.addStory(currentUser, formValues);
+  console.log("response: ", response);
+  //doesn't work with await
+  storyList.stories.unshift(response);
   putStoriesOnPage();
+
   // return response; 
 }
+
+$("#story-submission-form").on("submit", getStorySubmitForm);

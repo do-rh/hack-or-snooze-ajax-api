@@ -24,8 +24,8 @@ class Story {
   /** Parses hostname out of URL and returns it. */
 
   getHostName() {
-    // UNIMPLEMENTED: complete this function!
-    return "hostname.com";
+    let tmpURL = new URL(this.url);
+    return tmpURL.hostname;;
   }
 }
 
@@ -92,18 +92,20 @@ class StoryList {
   }
 }
    */
-  async addStory(user, newStory) {
+  static async addStory(user, newStory) {
     const postURL = "https://hack-or-snooze-v3.herokuapp.com/stories";
     let postSubmission = {};
     postSubmission.token = user.loginToken;
     postSubmission.story = newStory;
     console.log(postSubmission);
     const response = await axios.post(postURL, postSubmission);
-    return response;
+    const structuredStory = new Story(response.data.story);
+    console.log("newStory: ", structuredStory);
+    return structuredStory;
   }
 }
 
-
+// {title: "Test", author: "Me", url: "http://meow.com"});
 /******************************************************************************
  * User: a user in the system (only used to represent the current user)
  */
@@ -115,13 +117,13 @@ class User {
    */
 
   constructor({
-                username,
-                name,
-                createdAt,
-                favorites = [],
-                ownStories = []
-              },
-              token) {
+    username,
+    name,
+    createdAt,
+    favorites = [],
+    ownStories = []
+  },
+    token) {
     this.username = username;
     this.name = name;
     this.createdAt = createdAt;
@@ -192,7 +194,7 @@ class User {
   /** When we already have credentials (token & username) for a user,
    *   we can log them in automatically. This function does that.
    */
-//retrieved by window.localStorage
+  //retrieved by window.localStorage
   static async loginViaStoredCredentials(token, username) {
     try {
       const response = await axios({
