@@ -25,7 +25,7 @@ class Story {
 
   getHostName() {
     let tmpURL = new URL(this.url);
-    return tmpURL.hostname;;
+    return tmpURL.hostname;
   }
 }
 
@@ -73,37 +73,22 @@ class StoryList {
    * Returns the new Story instance
    */
 
-  //Are we adding to API & re-retrieving data to update our own story page, 
-  //or adding both independently
-
-  // Make post request to API
-  // API returns info needed to make the story instance
-  // Create story instance with API info
-  // Return story instance
-  /**
-   * URL of post request https://hack-or-snooze-v3.herokuapp.com/stories
-   * structure of post request
-   * {
-  "token": "YOUR_TOKEN_HERE",
-  "story": {
-    "author": "Matt Lane",
-    "title": "The best story ever",
-    "url": "http://google.com"
-  }
-}
-   */
+  //doesn't need to be static. update other callback
   static async addStory(user, newStory) {
-    const postURL = "https://hack-or-snooze-v3.herokuapp.com/stories";
-    let postSubmission = {};
-    postSubmission.token = user.loginToken;
-    postSubmission.story = newStory;
-    console.log(postSubmission);
+    let postURL = BASE_URL + '/stories';
+    let postSubmission = {
+      token: user.loginToken,
+      story: newStory
+    };
+    // console.log(postSubmission);
     const response = await axios.post(postURL, postSubmission);
     const structuredStory = new Story(response.data.story);
-    console.log("newStory: ", structuredStory);
+    //console.log("newStory: ", structuredStory);
     return structuredStory;
   }
 }
+
+//axios(post, url, data( = {}));
 
 // {title: "Test", author: "Me", url: "http://meow.com"});
 /******************************************************************************

@@ -30,10 +30,10 @@ $navLogin.on("click", navLoginClick);
 
 function updateNavOnLogin() {
   console.debug("updateNavOnLogin");
-  $(".main-nav-links").show();
   $navLogin.hide();
   $navLogOut.show();
   $navUserProfile.text(`${currentUser.username}`).show();
+  $(".account-forms-container").hide();
 }
 
 /** Show Story Submit Form on click of "submit" in the nav bar */

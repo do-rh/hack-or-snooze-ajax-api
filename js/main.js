@@ -13,6 +13,7 @@ const $signupForm = $("#signup-form");
 const $navLogin = $("#nav-login");
 const $navUserProfile = $("#nav-user-profile");
 const $navLogOut = $("#nav-logout");
+const $navHiddenLinks = $(".nav-hidden-links");
 
 /** To make it easier for individual components to show just themselves, this
  * is a useful function that hides pretty much everything on the page. After
@@ -24,6 +25,7 @@ function hidePageComponents() {
     $allStoriesList,
     $loginForm,
     $signupForm,
+
   ];
   components.forEach(c => c.hide());
 }
@@ -38,7 +40,9 @@ async function start() {
   await getAndShowStoriesOnStart();
 
   // if we got a logged-in user
-  if (currentUser) updateUIOnUserLogin();
+  if (currentUser) {
+    updateUIOnUserLogin();
+  }
 }
 
 // Once the DOM is entirely loaded, begin the app
