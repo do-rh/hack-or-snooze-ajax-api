@@ -229,18 +229,16 @@ class User {
   // }
 
   async getUserFavoriteStories() {
-    // currentUser = await axios.get(`${BASE_URL}/users/${currentUser.username}`, { "token": currentUser.loginToken });
-    // return currentUser;
     const response = await axios({
       url: `${BASE_URL}/users/${currentUser.username}`,
       method: "GET",
       params: { "token": currentUser.loginToken },
     });
-    console.log("favorites list from response: ", response.data.user.favorites);
+    // console.log("favorites list from response: ", response.data.user.favorites);
     this.favorites = response.data.user.favorites.map(story => new Story(story));
-    console.log("this favorites: ", this.favorites);
+    // console.log("this favorites: ", this.favorites);
   }
-  
+
   async removeFavoriteStory(evt) {
     const $storyId = $(evt.target).closest("li").attr("id");
     const $star = $(evt.target).closest("i");
