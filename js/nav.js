@@ -24,7 +24,10 @@ function navLoginClick(evt) {
 }
 
 $navLogin.on("click", navLoginClick);
-
+$("#nav-favorites").on("click", function () {
+  hidePageComponents();
+  putFavoriteStoriesOnPage();
+});
 
 /** When a user first logins in, update the navbar to reflect that. */
 
@@ -35,6 +38,7 @@ function updateNavOnLogin() {
   $navUserProfile.text(`${currentUser.username}`).show();
   $navHiddenLinks.show();
   $(".account-forms-container").hide();
+
 }
 
 /** Show Story Submit Form on click of "submit" in the nav bar */

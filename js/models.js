@@ -207,31 +207,57 @@ class User {
     }
   }
 
-  static async addFavoriteStory (evt) {
+  async addFavoriteStory(evt) {
     const $storyId = $(evt.target).closest("li").attr("id");
     // console.log("$storyId:", $storyId);
     // console.log("username:", currentUser.username);
     // console.log("getLongPart:", `${BASE_URL}/users/${currentUser.username}/favorites/${$storyId}`);
     // console.log("token:", {"token": currentUser.loginToken} );
-    const response = await axios.post(`${BASE_URL}/users/${currentUser.username}/favorites/${$storyId}`, {"token": currentUser.loginToken});
+    const response = await axios.post(`${BASE_URL}/users/${currentUser.username}/favorites/${$storyId}`, { "token": currentUser.loginToken });
     console.log("response", response);
     const favoritesList = response.data.user.favorites;
+    return favoritesList;
   }
 
+  // async getFavoritesList() {
+  //   const favoritesList = currentUser.favorites;
+  //   return favoritesList;
+  // }
+
+  async getUserFavoriteStories() {
+    // currentUser = await axios.get(`${BASE_URL}/users/${currentUser.username}`, { "token": currentUser.loginToken });
+    // return currentUser;
+    const response = await axios({
+      url: `${BASE_URL}/users/${currentUser.username}`,
+      method: "GET",
+      params: { "token": currentUser.loginToken },
+    });
+    console.log("favorites list from response: ", response.data.user.favorites);
+    this.favorites = response.data.user.favorites.map(story => new Story(story));
+    console.log("this favorites: ", this.favorites);
+  }
+
+
+  /**Loop through favoritesList array, create new list item for each story,
+   * populate into html.
+   */
+  //modles.js should just be about making classes, no jquery/dom updates
+
+
   // async addFavoriteStory(story) {
-    // paired with an eventlistener - COMPLETE
-    // takes in a story - COMPLETE
-    // for userFavorites, we need user and the story id - COMPLETE
-    // returns userObject with favorites array within - COMPLETE
-    // posting to API that takes in story instance and adds to favorite array - COMPLETE
-    // somewhere add favorite story to DOM (HTML section)
-    // change the class to this => <i class="fas fa-star"></i>
+  // paired with an eventlistener - COMPLETE
+  // takes in a story - COMPLETE
+  // for userFavorites, we need user and the story id - COMPLETE
+  // returns userObject with favorites array within - COMPLETE
+  // posting to API that takes in story instance and adds to favorite array - COMPLETE
+  // somewhere add favorite story to DOM (HTML section)
+  // change the class to this => <i class="fas fa-star"></i>
   // }
 
   // async removeFavoriteStory(story) {
-    // takes in a story
-    // posting to API that the story instance needs to be removed from the array;
-    // change the class back to <i class="far fa-star"></i>
+  // takes in a story
+  // posting to API that the story instance needs to be removed from the array;
+  // change the class back to <i class="far fa-star"></i>
   // }
 
   // need to create two eventlisteners at some point somewhere
@@ -239,9 +265,7 @@ class User {
   // the unfavorite function and vice versa
 
   // update favoritesList() {
-    // empty favoritesList section
-    // loop through favoritesList and add a list item to the DOM
+  // empty favoritesList section
+  // loop through favoritesList and add a list item to the DOM
   // }
 }
-
-$("#all-stories-list").on("click", "i", User.addFavoriteStory);

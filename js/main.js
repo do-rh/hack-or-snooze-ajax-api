@@ -14,6 +14,7 @@ const $navLogin = $("#nav-login");
 const $navUserProfile = $("#nav-user-profile");
 const $navLogOut = $("#nav-logout");
 const $navHiddenLinks = $(".nav-hidden-links");
+const $favorites = $(".favorites");
 
 /** To make it easier for individual components to show just themselves, this
  * is a useful function that hides pretty much everything on the page. After
@@ -25,7 +26,8 @@ function hidePageComponents() {
     $allStoriesList,
     $loginForm,
     $signupForm,
-
+    $favorites,
+    $storySubmissionForm
   ];
   components.forEach(c => c.hide());
 }
@@ -42,6 +44,7 @@ async function start() {
   // if we got a logged-in user
   if (currentUser) {
     updateUIOnUserLogin();
+    $("#all-stories-list").on("click", "i", currentUser.addFavoriteStory);
   }
 }
 

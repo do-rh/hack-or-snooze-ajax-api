@@ -22,6 +22,7 @@ async function getAndShowStoriesOnStart() {
  */
 
 function generateStoryMarkup(story) {
+  console.log("genStoryMarkup story: ", story);
   const hostName = story.getHostName();
   return $(`
       <li id="${story.storyId}">
@@ -49,6 +50,24 @@ function putStoriesOnPage() {
   }
 
   $allStoriesList.show();
+}
+
+/** Puts favorite stories on page. */
+
+async function putFavoriteStoriesOnPage() {
+
+  $favorites.empty();
+  // console.log("currentUser instance of: ", currentUser instanceof User);
+  const favoritesList = await currentUser.getUserFavoriteStories();
+  // loop through all of our stories in favorites array 
+  // and generate HTML for them
+  for (let favorite of currentUser.favorites) {
+    const $story = generateStoryMarkup(favorite);
+    $favorites.append($story);
+  }
+
+  $favorites.show();
+
 }
 
 /** Get the data from the submit story form and return formValues object
