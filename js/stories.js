@@ -51,8 +51,8 @@ function putStoriesOnPage() {
   $allStoriesList.show();
 }
 
-/** Get the data from the submit story form, call add story on
- * new story submission and then update DOM with new submission.
+/** Get the data from the submit story form and return formValues object
+ *  with all form values inside.
  */
 
 function getStorySubmitForm() {
@@ -69,10 +69,11 @@ function getStorySubmitForm() {
 }
 
 /** Expected to be used with an Event Listener. This function takes
- *  the values from getStorySubmitForm, puts it into a addStory to get
+ *  the values from getStorySubmitForm, puts it into addStory to get
  *  a new Story object that is added to the front of the stories array.
- *  The function then calls putStoriesOnPage to add it to the HTML Page
+ *  The function then calls putStoriesOnPage to add it to the HTML Page.
 */
+
 async function addStoryToStoryList(evt) {
   evt.preventDefault();
   let formValues = getStorySubmitForm();

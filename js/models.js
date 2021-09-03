@@ -207,9 +207,23 @@ class User {
     }
   }
 
+  static async addFavoriteStory (evt) {
+    const $storyId = $(evt.target).closest("li").attr("id");
+    // console.log("$storyId:", $storyId);
+    // console.log("username:", currentUser.username);
+    // console.log("getLongPart:", `${BASE_URL}/users/${currentUser.username}/favorites/${$storyId}`);
+    // console.log("token:", {"token": currentUser.loginToken} );
+    const response = await axios.post(`${BASE_URL}/users/${currentUser.username}/favorites/${$storyId}`, {"token": currentUser.loginToken});
+    console.log("response", response);
+    const favoritesList = response.data.user.favorites;
+  }
+
   // async addFavoriteStory(story) {
-    // takes in a story
-    // posting to API that takes in story instance and adds to favorite array
+    // paired with an eventlistener - COMPLETE
+    // takes in a story - COMPLETE
+    // for userFavorites, we need user and the story id - COMPLETE
+    // returns userObject with favorites array within - COMPLETE
+    // posting to API that takes in story instance and adds to favorite array - COMPLETE
     // somewhere add favorite story to DOM (HTML section)
     // change the class to this => <i class="fas fa-star"></i>
   // }
@@ -229,3 +243,5 @@ class User {
     // loop through favoritesList and add a list item to the DOM
   // }
 }
+
+$("#all-stories-list").on("click", "i", User.addFavoriteStory);
