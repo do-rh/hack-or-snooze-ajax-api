@@ -10,6 +10,8 @@ function navAllStories(evt) {
   console.debug("navAllStories", evt);
   hidePageComponents();
   putStoriesOnPage();
+
+
 }
 
 $body.on("click", "#nav-all", navAllStories);
@@ -41,14 +43,13 @@ function updateNavOnLogin() {
 
 }
 
-/** Show Story Submit Form on click of "submit" in the nav bar */
-function navShowStorySubmitForm(evt) {
-  // console.debug("navShowStorySubmitForm:", evt);
-  $("#story-submission-form").show();
-}
+/** When user clicks on submit button in nav bar, all components are hidden
+ *  and story submit form is unhidden
+ */
 
 $("#nav-submit-stories").on("click", function () {
   hidePageComponents();
-  navShowStorySubmitForm();
+  $storySubmissionForm.show();
+  $allStoriesList.show();
 });
 

@@ -88,9 +88,7 @@ class StoryList {
   }
 }
 
-//axios(post, url, data( = {}));
 
-// {title: "Test", author: "Me", url: "http://meow.com"});
 /******************************************************************************
  * User: a user in the system (only used to represent the current user)
  */
@@ -179,7 +177,7 @@ class User {
   /** When we already have credentials (token & username) for a user,
    *   we can log them in automatically. This function does that.
    */
-  //retrieved by window.localStorage
+
   static async loginViaStoredCredentials(token, username) {
     try {
       const response = await axios({
@@ -207,27 +205,9 @@ class User {
     }
   }
 
-  async addFavoriteStory(evt) {
-    const $storyId = $(evt.target).closest("li").attr("id");
-    const $star = $(evt.target).closest("i");
-    $star.toggleClass("far", "fas");
-    $star.toggleClass("fas", "far");
-
-    // console.log("$storyId:", $storyId);
-    // console.log("username:", currentUser.username);
-    // console.log("getLongPart:", `${BASE_URL}/users/${currentUser.username}/favorites/${$storyId}`);
-    // console.log("token:", {"token": currentUser.loginToken} );
-    const response = await axios.post(`${BASE_URL}/users/${currentUser.username}/favorites/${$storyId}`, { "token": currentUser.loginToken });
-    console.log("response", response);
-    const favoritesList = response.data.user.favorites;
-    return favoritesList;
-  }
-
-  // async getFavoritesList() {
-  //   const favoritesList = currentUser.favorites;
-  //   return favoritesList;
-  // }
-
+  /** a get request for the current user's favorite stories and updates the current user's favorites list with
+   *  story instances
+   */
   async getUserFavoriteStories() {
     const response = await axios({
       url: `${BASE_URL}/users/${currentUser.username}`,
@@ -239,60 +219,35 @@ class User {
     // console.log("this favorites: ", this.favorites);
   }
 
+  /** when the user clicks on the star button to remove a story to their favorites, the story is posted to the server
+   *  and updates the currentUser's favorite list without the story.
+   */
+
   async removeFavoriteStory(evt) {
-    const $storyId = $(evt.target).closest("li").attr("id");
-    const $star = $(evt.target).closest("i");
-    $star.toggleClass("fas", "far");
-    $star.toggleClass("far", "fas");
-    const response = await axios.post(`${BASE_URL}/users/${currentUser.username}/favorites/${$storyId}`, { "token": currentUser.loginToken });
+    const storyId = updateAndGetFavoriteStar(evt);
+    // console.log("token:", currentUser.loginToken);
+    const response = await axios.delete(`${BASE_URL}/users/${this.username}/favorites/${storyId}`, { data: { "token": this.loginToken } });
+    console.log("response in removeFavoriteStory:", response);
     const favoritesList = response.data.user.favorites;
+    this.favorites = favoritesList;
     return favoritesList;
   }
 
+  /** when the user clicks on the star button to add a story to their favorites, the story is posted to the server
+   *  and updates the currentUser's favorite list with the new story.
+   */
 
   async addFavoriteStory(evt) {
-    const $storyId = $(evt.target).closest("li").attr("id");
-    const $star = $(evt.target).closest("i");
-    $star.toggleClass("far", "fas");
-    $star.toggleClass("fas", "far");
+    const storyId = updateAndGetFavoriteStar(evt);
 
     // console.log("$storyId:", $storyId);
     // console.log("username:", currentUser.username);
     // console.log("getLongPart:", `${BASE_URL}/users/${currentUser.username}/favorites/${$storyId}`);
     // console.log("token:", {"token": currentUser.loginToken} );
-    const response = await axios.post(`${BASE_URL}/users/${currentUser.username}/favorites/${$storyId}`, { "token": currentUser.loginToken });
+    const response = await axios.post(`${BASE_URL}/users/${this.username}/favorites/${storyId}`, { "token": this.loginToken });
     console.log("response", response);
     const favoritesList = response.data.user.favorites;
+    this.favorites = favoritesList;
     return favoritesList;
   }
-  /**Loop through favoritesList array, create new list item for each story,
-   * populate into html.
-   */
-  //modles.js should just be about making classes, no jquery/dom updates
-
-
-  // async addFavoriteStory(story) {
-  // paired with an eventlistener - COMPLETE
-  // takes in a story - COMPLETE
-  // for userFavorites, we need user and the story id - COMPLETE
-  // returns userObject with favorites array within - COMPLETE
-  // posting to API that takes in story instance and adds to favorite array - COMPLETE
-  // somewhere add favorite story to DOM (HTML section)
-  // change the class to this => <i class="fas fa-star"></i>
-  // }
-
-  // async removeFavoriteStory(story) {
-  // takes in a story
-  // posting to API that the story instance needs to be removed from the array;
-  // change the class back to <i class="far fa-star"></i>
-  // }
-
-  // need to create two eventlisteners at some point somewhere
-  // create an if statement to see if the item is already a favorite, then it'll run
-  // the unfavorite function and vice versa
-
-  // update favoritesList() {
-  // empty favoritesList section
-  // loop through favoritesList and add a list item to the DOM
-  // }
 }

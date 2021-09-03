@@ -112,6 +112,6 @@ function updateUIOnUserLogin() {
   console.debug("updateUIOnUserLogin");
 
   $allStoriesList.show();
-
+  $(".stories-list i").removeClass("hidden");
   updateNavOnLogin();
 }

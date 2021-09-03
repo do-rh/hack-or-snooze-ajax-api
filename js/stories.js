@@ -5,8 +5,6 @@ let storyList;
 
 /** Get and show stories when site first loads. */
 
-const $storySubmissionForm = $("#story-submission-form")
-const $favoritesList = $("#favorites-list");
 async function getAndShowStoriesOnStart() {
   storyList = await StoryList.getStories();
   $storiesLoadingMsg.remove();
@@ -26,7 +24,7 @@ function generateStoryMarkup(story) {
   const hostName = story.getHostName();
   return $(`
       <li id="${story.storyId}">
-      <i class="far fa-star"></i>
+      <i class="far fa-star hidden"></i>
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
         </a>
@@ -47,11 +45,15 @@ function putStoriesOnPage() {
   for (let story of storyList.stories) {
     const $story = generateStoryMarkup(story);
     $allStoriesList.append($story);
-    console.log("$story: ", $story);
-    if (JSON.stringify(currentUser.favorites).includes(JSON.stringify(story.storyId))) {
-      console.log("$story.child(i): ", $story.find("i"));
-      $story.find("i").removeClass("far");
-      $story.find("i").addClass("fas");
+    // checking if the starred item exists in the current user's favorites list
+    if (currentUser) {
+      $("#all-stories-list i").removeClass("hidden");
+    } 
+    
+    if (currentUser && JSON.stringify(currentUser.favorites).includes(JSON.stringify(story.storyId))) {
+      $story.find("i")
+        .removeClass("far")
+        .addClass("fas");
     }
   }
 
@@ -71,8 +73,9 @@ async function putFavoriteStoriesOnPage() {
     const $story = generateStoryMarkup(favorite);
     $favoritesList.append($story);
   }
-  $(".favorites i").removeClass("far")
-    .addClass("fas")
+  $(".favorites i")
+    .removeClass("far hidden")
+    .addClass("fas");
 
   $favorites.show();
 
@@ -110,5 +113,33 @@ async function addStoryToStoryList(evt) {
   putStoriesOnPage();
 }
 
-$storySubmissionForm.on("submit", addStoryToStoryList);
+/** updates the star icon to be either filled or empty depending on if the
+ *  story is being added or removed. Function returns the storyId of the event
+ *  listener.
+ */
 
+function updateAndGetFavoriteStar(evt) {
+  const $storyId = $(evt.target).closest("li").attr("id");
+  const $star = $(evt.target).closest("i");
+  $star.toggleClass("far", "fas");
+  $star.toggleClass("fas", "far");
+  return $storyId;
+}
+
+/** updates DOM elements when star is clicked */
+function handleStarClick(evt) {
+  const $eventId = $(evt.target).closest("li").attr("id");
+  if (JSON.stringify(currentUser.favorites).includes($eventId)) {
+    currentUser.removeFavoriteStory(evt);
+    console.log("this is removing");
+  } else {
+    currentUser.addFavoriteStory(evt);
+    console.log("this is adding");
+  }
+}
+
+/******************************************************************************
+ * Event Listeners
+ */
+
+$storySubmissionForm.on("submit", addStoryToStoryList);

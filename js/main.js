@@ -6,6 +6,7 @@ const $body = $("body");
 
 const $storiesLoadingMsg = $("#stories-loading-msg");
 const $allStoriesList = $("#all-stories-list");
+const $storySubmissionForm = $("#story-submission-form")
 
 const $loginForm = $("#login-form");
 const $signupForm = $("#signup-form");
@@ -14,7 +15,10 @@ const $navLogin = $("#nav-login");
 const $navUserProfile = $("#nav-user-profile");
 const $navLogOut = $("#nav-logout");
 const $navHiddenLinks = $(".nav-hidden-links");
+
 const $favorites = $(".favorites");
+const $favoritesList = $("#favorites-list");
+
 
 /** To make it easier for individual components to show just themselves, this
  * is a useful function that hides pretty much everything on the page. After
@@ -44,7 +48,9 @@ async function start() {
   // if we got a logged-in user
   if (currentUser) {
     updateUIOnUserLogin();
-    $("#all-stories-list").on("click", "i", currentUser.addFavoriteStory);
+    // adding event listener on favorite stars when user is logged in and
+    // page is loaded with stories
+    $allStoriesList.on("click", "i", handleStarClick);
   }
 }
 
