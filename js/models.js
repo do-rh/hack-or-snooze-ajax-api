@@ -209,6 +209,10 @@ class User {
 
   async addFavoriteStory(evt) {
     const $storyId = $(evt.target).closest("li").attr("id");
+    const $star = $(evt.target).closest("i");
+    $star.toggleClass("far", "fas");
+    $star.toggleClass("fas", "far");
+
     // console.log("$storyId:", $storyId);
     // console.log("username:", currentUser.username);
     // console.log("getLongPart:", `${BASE_URL}/users/${currentUser.username}/favorites/${$storyId}`);
@@ -236,8 +240,33 @@ class User {
     this.favorites = response.data.user.favorites.map(story => new Story(story));
     console.log("this favorites: ", this.favorites);
   }
+  
+  async removeFavoriteStory(evt) {
+    const $storyId = $(evt.target).closest("li").attr("id");
+    const $star = $(evt.target).closest("i");
+    $star.toggleClass("fas", "far");
+    $star.toggleClass("far", "fas");
+    const response = await axios.post(`${BASE_URL}/users/${currentUser.username}/favorites/${$storyId}`, { "token": currentUser.loginToken });
+    const favoritesList = response.data.user.favorites;
+    return favoritesList;
+  }
 
 
+  async addFavoriteStory(evt) {
+    const $storyId = $(evt.target).closest("li").attr("id");
+    const $star = $(evt.target).closest("i");
+    $star.toggleClass("far", "fas");
+    $star.toggleClass("fas", "far");
+
+    // console.log("$storyId:", $storyId);
+    // console.log("username:", currentUser.username);
+    // console.log("getLongPart:", `${BASE_URL}/users/${currentUser.username}/favorites/${$storyId}`);
+    // console.log("token:", {"token": currentUser.loginToken} );
+    const response = await axios.post(`${BASE_URL}/users/${currentUser.username}/favorites/${$storyId}`, { "token": currentUser.loginToken });
+    console.log("response", response);
+    const favoritesList = response.data.user.favorites;
+    return favoritesList;
+  }
   /**Loop through favoritesList array, create new list item for each story,
    * populate into html.
    */

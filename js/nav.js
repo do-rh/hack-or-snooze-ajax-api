@@ -47,4 +47,8 @@ function navShowStorySubmitForm(evt) {
   $("#story-submission-form").show();
 }
 
-$("#nav-submit-stories").on("click", navShowStorySubmitForm);
+$("#nav-submit-stories").on("click", function () {
+  hidePageComponents();
+  navShowStorySubmitForm();
+});
+

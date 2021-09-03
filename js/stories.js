@@ -6,7 +6,7 @@ let storyList;
 /** Get and show stories when site first loads. */
 
 const $storySubmissionForm = $("#story-submission-form")
-
+const $favoritesList = $("#favorites-list");
 async function getAndShowStoriesOnStart() {
   storyList = await StoryList.getStories();
   $storiesLoadingMsg.remove();
@@ -47,6 +47,12 @@ function putStoriesOnPage() {
   for (let story of storyList.stories) {
     const $story = generateStoryMarkup(story);
     $allStoriesList.append($story);
+    console.log("$story: ", $story);
+    if (JSON.stringify(currentUser.favorites).includes(JSON.stringify(story.storyId))) {
+      console.log("$story.child(i): ", $story.find("i"));
+      $story.find("i").removeClass("far");
+      $story.find("i").addClass("fas");
+    }
   }
 
   $allStoriesList.show();
@@ -56,15 +62,17 @@ function putStoriesOnPage() {
 
 async function putFavoriteStoriesOnPage() {
 
-  $favorites.empty();
+  $favoritesList.empty();
   // console.log("currentUser instance of: ", currentUser instanceof User);
   const favoritesList = await currentUser.getUserFavoriteStories();
   // loop through all of our stories in favorites array 
   // and generate HTML for them
   for (let favorite of currentUser.favorites) {
     const $story = generateStoryMarkup(favorite);
-    $favorites.append($story);
+    $favoritesList.append($story);
   }
+  $(".favorites i").removeClass("far")
+    .addClass("fas")
 
   $favorites.show();
 
