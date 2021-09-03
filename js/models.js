@@ -189,6 +189,7 @@ class User {
       });
 
       const { user } = response.data;
+      console.log("userObject:", user);
 
       return new User(
         {
@@ -205,4 +206,26 @@ class User {
       return null;
     }
   }
+
+  // async addFavoriteStory(story) {
+    // takes in a story
+    // posting to API that takes in story instance and adds to favorite array
+    // somewhere add favorite story to DOM (HTML section)
+    // change the class to this => <i class="fas fa-star"></i>
+  // }
+
+  // async removeFavoriteStory(story) {
+    // takes in a story
+    // posting to API that the story instance needs to be removed from the array;
+    // change the class back to <i class="far fa-star"></i>
+  // }
+
+  // need to create two eventlisteners at some point somewhere
+  // create an if statement to see if the item is already a favorite, then it'll run
+  // the unfavorite function and vice versa
+
+  // update favoritesList() {
+    // empty favoritesList section
+    // loop through favoritesList and add a list item to the DOM
+  // }
 }
