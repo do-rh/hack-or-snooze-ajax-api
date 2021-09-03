@@ -68,7 +68,11 @@ function getStorySubmitForm() {
   return formValues;
 }
 
-/** */
+/** Expected to be used with an Event Listener. This function takes
+ *  the values from getStorySubmitForm, puts it into a addStory to get
+ *  a new Story object that is added to the front of the stories array.
+ *  The function then calls putStoriesOnPage to add it to the HTML Page
+*/
 async function addStoryToStoryList(evt) {
   evt.preventDefault();
   let formValues = getStorySubmitForm();
