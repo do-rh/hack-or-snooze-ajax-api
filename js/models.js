@@ -72,7 +72,7 @@ class StoryList {
    *
    * Returns the new Story instance
    */
-
+  // TO DO: move adding to storylist
   //doesn't need to be static. update other callback
   static async addStory(user, newStory) {
     let postURL = BASE_URL + '/stories';
@@ -222,8 +222,10 @@ class User {
   /** when the user clicks on the star button to remove a story to their favorites, the story is posted to the server
    *  and updates the currentUser's favorite list without the story.
    */
-
+  // TO DO: Separate logic so that this function does not take in the evt. Move to stories.js
+  // TO DO: should only modify stories, based on whats favorites, what the stars should be
   async removeFavoriteStory(evt) {
+    // TO DO: Update this next line. It is still using jQuery in this function
     const storyId = updateAndGetFavoriteStar(evt);
     // console.log("token:", currentUser.loginToken);
     const response = await axios.delete(`${BASE_URL}/users/${this.username}/favorites/${storyId}`, { data: { "token": this.loginToken } });

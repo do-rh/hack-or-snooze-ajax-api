@@ -38,3 +38,10 @@
   display: block;
 }
 
+/* favorites section */
+
+#favorites-list > li {
+  color: gray;
+  font-size: 0.8rem;
+  margin: 10px 0;
+}

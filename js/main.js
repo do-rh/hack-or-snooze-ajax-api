@@ -50,6 +50,7 @@ async function start() {
     updateUIOnUserLogin();
     // adding event listener on favorite stars when user is logged in and
     // page is loaded with stories
+    // TO DO: Move to stories.js 
     $allStoriesList.on("click", "i", handleStarClick);
   }
 }

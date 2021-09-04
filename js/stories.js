@@ -49,7 +49,7 @@ function putStoriesOnPage() {
     if (currentUser) {
       $("#all-stories-list i").removeClass("hidden");
     } 
-    
+    // could live in generateStoryMarkup
     if (currentUser && JSON.stringify(currentUser.favorites).includes(JSON.stringify(story.storyId))) {
       $story.find("i")
         .removeClass("far")
@@ -121,19 +121,19 @@ async function addStoryToStoryList(evt) {
 function updateAndGetFavoriteStar(evt) {
   const $storyId = $(evt.target).closest("li").attr("id");
   const $star = $(evt.target).closest("i");
-  $star.toggleClass("far", "fas");
-  $star.toggleClass("fas", "far");
+  $star.toggleClass("far fas");
   return $storyId;
 }
 
+// TO DO: Use find, indexOf etc. instead of JSON
 /** updates DOM elements when star is clicked */
-function handleStarClick(evt) {
+async function handleStarClick(evt) {
   const $eventId = $(evt.target).closest("li").attr("id");
   if (JSON.stringify(currentUser.favorites).includes($eventId)) {
-    currentUser.removeFavoriteStory(evt);
+    await currentUser.removeFavoriteStory(evt);
     console.log("this is removing");
   } else {
-    currentUser.addFavoriteStory(evt);
+    await currentUser.addFavoriteStory(evt);
     console.log("this is adding");
   }
 }
